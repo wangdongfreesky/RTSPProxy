@@ -1,0 +1,5 @@
+PL.xml和PL.xml.gz为电子节目单
+LanLive.m3u用于局域网直播，不可根据节目单回看，需要路由器开启udpx代理
+LanReplay.m3u用于局域网回看，主路由需要设置静态路由指向内网地址
+NetLive.m3u用于外网观看直播，不可根据节目单回看，除路由器开启udpx代理，还需要域名和端口映射
+NetReplay.m3u用于外网回看，需要路由器运行rtspproxy代理，以及域名和端口映射

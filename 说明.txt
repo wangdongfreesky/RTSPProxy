@@ -1,0 +1,57 @@
+安装镜像
+注意：两条-v要根据自己的实际路径修改
+docker pull xinjiawei1/heiptv:4.1.38
+docker run \
+            -d --name heiptv \
+            -p 2000:8080 \
+            -p 554:554 \
+            -v /mnt/nvme0n1-4/Configs/IPTV/output:/app/output \
+            -v /mnt/nvme0n1-4/Configs/IPTV/config:/app/config \
+            xinjiawei1/heiptv:4.1.38
+进入容器
+docker exec -it 6284a6f31df5 /bin/bash
+拷贝 lighttpd_error.log到/app/config/lighttpd_error.log
+lighttpd_error.log 权限 777
+拷贝iptv.py rtspproxy.py starttask.py getlogo.py四个文件到/app/config目录下
+拷贝播放说明到/app/output/lighttps/root目录下，没有的话要建立目录
+此外还要建立/app/output/lighttps/root/logo目录，用于存放logo
+service lighttpd start
+关梯子运行
+apt update
+apt install python3
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py 
+python3 get-pip.py
+pip install requests
+pip install schedule
+
+手动运行：
+使用进入容器命令后执行
+删除没用的udpxy
+rm udpxy 
+rm get-pip.py
+rm heiptv_emulate
+rm libboost_filesystem.so.1.86.0
+rm libboost_json.so.1.86.0
+rm move_to_webroot.sh
+rm Dockerfile
+
+修改 stup.sh
+nano stup.sh
+添加几条条
+修改为                                                                 
+service lighttpd start
+python3 /app/config/starttask.py &
+python3 /app/config/rtspproxy.py &
+tail -f /dev/null
+ctrl+x 按y保存，&表示后台运行，两个py互不干扰
+重启容器
+
+将iptv.py及rtspproxy.py，getlogo.py中的相关参数修改，以及starttask.py运行时间默认为1点和13点，两个文件拷贝到app/config目录下
+进入容器后执行python3 starttask.py
+
+
+
+
+ctrl + C跳出循环的py程序
+
+
